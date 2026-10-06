@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "صلاتي | تدريب الصلاة"
+description = "تطبيق ويب عربي متجاوب للتدرب على قراءة نصوص الصلاة ومراجعة الحركات، مع معاينة كاميرا وتسجيل محلي داخل المتصفح."
+version = "1.0.0"
+id = "artifacts/salati-training"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19758
+
+[services.development]
+run = "pnpm --filter @workspace/salati-training run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/salati-training", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/salati-training/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19758"
+BASE_PATH = "/"
